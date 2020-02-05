@@ -1,0 +1,105 @@
+<html>
+<head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="materialize/css/materialize.min.css">
+<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript" src="login.js"></script>
+<link rel="stylesheet" href="utils.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+#site-layout-top {
+    xbackground-color: #E57373;
+    xxheight: 42px;
+}
+
+#store_availability, #email_availability, #username_availability{
+color: red;
+display: none;
+}
+</style>
+</head>
+<body onload=do_remember_me()>
+<div class="row">
+	<div id="site-layout-top" class="cyan accent-3 cyan-text text-lighten-5 col s12" >
+	  <!-- <p class="flat-text-logo"></p> -->
+	  	  <div class="col s0">
+			<i class="large material-icons cyan-text text-darken-1">code</i>
+		  </div>
+		  <div class="col s1" style="position: relative; left: -15px">
+			<h4 class="cyan-text text-accent-4">DRM++</h4>
+		  </div>
+
+	</div>
+	<div class="light-blue lighten-5 col s12">
+		<div class="col">
+		<h5><b>Login</b></h5>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+<div class="row">
+    <div class="input-field col offset-s3 s5">
+      <input id="store" type="text" class="validate" maxlength="20">
+      <label for="store">Store name</label>
+	  <p id="store_availability">Store does not exist.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-field col offset-s3 s5">
+      <input id="account" type="text" class="validate" maxlength="40">
+      <label for="account">E-mail or username</label>
+    </div>
+  </div>
+
+    <div class="row">
+    	<div class="input-field col offset-s3 s5">
+      <input id="password" type="password" class="validate" minlength="8">
+      <label for="password">Password</label>
+    </div>
+  </div>
+  <!--<div class="row">
+    <div class="input-field col offset-s3 s5">
+      <input id="password" type="password" class="validate">
+      <label for="password">Password</label>
+    </div>
+  </div>-->
+  <div class="row">
+   <p class="col offset-s3">
+      <label>
+        <input type="checkbox" id="remember_me" />
+        <span class="black-text">Remember me</span>
+      </label>
+    </p>
+	</div>
+
+	<div class="row">
+		<div class="col offset-s3">
+			<a class="waves-effect waves-light btn-large" id="submit" href="#" onclick=submit_form(this)>Login</a>
+		</div>
+		<div class="col offset-s3">
+			<a class="waves-effect waves-light btn-large" href="index.html">Return</a>
+		</div>
+	</div>
+
+</div>
+<script>
+function submit_form()
+{
+	$("#submit").text("Submitting...");
+	$("#submit").addClass("disabled");
+	logging_in = true;
+	login($("#store").val(), $("#account").val(), $("#password").val(), $("#remember_me").prop("checked"));
+}
+
+$(document).keypress(function(e){
+    if (e.which == 13)
+		document.getElementById("submit").onclick();
+});
+</script>
+
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+</html>

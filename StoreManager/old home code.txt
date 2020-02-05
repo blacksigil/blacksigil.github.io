@@ -1,0 +1,234 @@
+<!--
+  <!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="#!">Contact support</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">Signout</a></li>
+</ul>
+
+<nav class="nav-extended cyan accent-3 cyan-text text-lighten-5">
+  <div class="nav-wrapper">
+    <a href="#" class="brand-logo">Logo</a>
+    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Account<i class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
+  </div>
+  <div class="nav-content">
+    <ul class="tabs tabs-transparent">
+      <li class="tab"><a href="#test1">Test 1</a></li>
+      <li class="tab"><a class="active" href="#test2">Test 2</a></li>
+      <li class="tab disabled"><a href="#test3">Disabled Tab</a></li>
+      <li class="tab"><a href="#test4">Test 4</a></li>
+    </ul>
+  </div>
+</nav>
+
+<ul class="sidenav" id="mobile-demo">
+    <!--<li><a href="#!">First Sidebar Link</a></li>-->
+    <li class="no-padding">
+      <ul class="collapsible collapsible-accordion">
+        <li>
+          <a class="collapsible-header">Account</a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#!">Logout</a></li>
+              <li><a href="#!">Contact Support</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+  </ul>
+-->
+<div class="row">
+<div class="col s12">
+  <ul class="tabs">
+    <li class="tab col s3"><a href="#tabcontent1">Dashboard</a></li>
+    <li class="tab col s3"><a href="#tabcontent2">Apps</a></li>
+    <li class="tab col s3"><a href="#tabcontent3">Test 3</a></li>
+  </ul>
+</div>
+
+<div id="tabcontent1" class="col s12">
+  <div class="row grey lighten-5">
+   <div class="col s12 m6">
+     <div class="card">
+       <div class="card-content black-text">
+         <span class="card-title">System Announcements</span>
+         <p>No annoucements are currently available.</p>
+       </div>
+       <div class="divider"></div>
+       <div class="row">
+         <ul class="pagination">
+           <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+           <li class="active"><a href="#!">1</a></li>
+           <li class="waves-effect disabled"><a href="#!">2</a></li>
+           <li class="waves-effect disabled"><a href="#!">3</a></li>
+           <li class="waves-effect disabled"><a href="#!">4</a></li>
+           <li class="waves-effect disabled"><a href="#!">5</a></li>
+           <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+         </ul>
+       </div> <!--card action end-->
+     </div>
+   </div>
+ </div>
+
+</div> <!-- end tabcontent1-->
+
+<div id="tabcontent2" class="col s12">
+  <div class="appcontainer">
+    <div class="row">
+      <div class="col s2">
+        <div class="card black-text" id="app1">
+          <div class="card-content cyan lighten-4">
+            <span class="card-title">MyFirstApp</span>
+          </div>
+          <div class="card-content">
+            <p>271 licenses</p>
+            <p>4 active users</p>
+            <br>
+            <a href="#" class="btn waves-effect waves-light cyan lighten-3 black-text">Edit Settings</a>
+            <a href="#" class="btn waves-effect waves-light red lighten-1 grey-text text-darken-4 right">Delete App</a>
+
+          </div>
+      </div>
+    </div> <!--end app 1-->
+    <div class="col s2">
+      <div class="card black-text" id="app2">
+        <div class="card-content cyan lighten-4">
+          <span class="card-title">MySecondApp</span>
+        </div>
+        <div class="card-content">
+          <p>0 licenses</p>
+          <p>0 active users</p>
+          <br>
+          <a href="#" class="btn waves-effect waves-light cyan lighten-3 black-text">Edit Settings</a>
+          <a href="#" class="btn waves-effect waves-light red lighten-1 grey-text text-darken-4 right">Delete App</a>
+
+        </div>
+    </div>
+  </div> <!--end app 2-->
+
+  </div>
+
+</div>
+</div> <!--end tab2 content-->
+
+<div id="tabcontent3" class="col s12">
+
+</div>
+
+</div>
+
+
+<script>
+$(document).ready(function(){
+//M.AutoInit();
+$('.tabs').tabs();
+$(".dropdown-trigger").dropdown();
+$('.sidenav').sidenav();
+
+var elems = document.querySelectorAll('.collapsible');
+for (var i = 0; i < elems.length; i++)
+var XcollapsibleInstance = M.Collapsible.init(elems[i]);
+
+});
+</script>
+
+
+
+
+
+
+
+
+<style>
+.mypage{
+  border-radius: 6px;
+}
+
+.mypage a{
+  border-radius: 9px;
+}
+.mypage a:not(:first-child){
+  margin-left: 10px;
+}
+
+.mypage a:hover{
+  opacity: .7;
+}
+
+.appcontainer{
+
+}
+</style>
+
+
+
+
+
+
+
+
+teal darken-4 cyan-text text-accent-2
+
+
+
+
+
+
+
+<div class="col" style="position: relative; top: -30px">
+  <span class="black-text" style="position: absolute; top: -3px: left: -3px; border-radius: 3px; border: 1px solid black; padding: 4px; background: white; opacity: .6">Smbios</span>
+  <div class="card-panel" style="margin-top: 20px">
+    <div class="row">
+      <div class="col">
+      <label>
+        <input id="setting_hwid_smbios_antispoof" type="checkbox" class="filled-in" checked="checked" onclick="save_store_settings()" />
+        <span>Bios Info</span>
+      </label>
+    </div>
+    <div class="col">
+      <label>
+        <input id="setting_hwid_gpu" type="checkbox" class="filled-in" checked="checked" onclick="save_store_settings()" />
+        <span>System Info</span>
+          (sys uuid)
+      </label>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col">
+      <label>
+        <input id="setting_hwid_smbios_antispoof" type="checkbox" class="filled-in" checked="checked" onclick="save_store_settings()" />
+        <span>Bios Info</span>
+      </label>
+    </div>
+    <div class="col">
+      <label>
+        <input id="setting_hwid_gpu" type="checkbox" class="filled-in" checked="checked" onclick="save_store_settings()" />
+        <span>System Info</span>
+          (sys uuid)
+      </label>
+    </div>
+    </div>
+
+  </div>
+</div> <!-- end smbios -->
+
+
+
+
+
+
+
+<div class="col" style="position: relative; top: -30px; min-width: 100px">
+  <span class="cyan-text text-accent-4" style="position: absolute; top: 8px; left: 30px; border: 1px solid #004d40; padding: 0px 10px 0px 10px; border-radius: 5px; background: white;">GPU</span>
+  <label style="position: absolute; top: 8px; left: 7px;">
+    <input id="setting_hwid_gpu" type="checkbox" class="filled-in" checked="checked" onclick="save_store_settings()" />
+    <span></span>
+  </label>
+  <div class="card-panel" style="margin-top: 20px">
+
+  </div>
+</div>

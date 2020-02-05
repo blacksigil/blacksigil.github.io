@@ -1,0 +1,179 @@
+<html>
+<head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">	  
+<link rel="stylesheet" href="materialize/css/materialize.min.css">
+<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<link rel="stylesheet" href="utils.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+#site-layout-top {
+    xbackground-color: #E57373;
+    xxheight: 42px;
+}
+
+#store_availability, #email_availability, #username_availability{
+color: red;
+display: none;
+}
+</style>
+</head>
+<body>
+<div class="row">
+	<div id="site-layout-top" class="cyan accent-3 cyan-text text-lighten-5 col s12" >
+	  <!-- <p class="flat-text-logo"></p> -->
+	  	  <div class="col s0">
+			<i class="large material-icons cyan-text text-darken-1">code</i>
+		  </div>
+		  <div class="col s1" style="position: relative; left: -15px">
+			<h4 class="cyan-text text-accent-4">DRM++</h4>
+		  </div>
+	  
+	</div>
+	<div class="light-blue lighten-5 col s12">
+		<div class="col">
+		<h5><b>Register your store (14-day free trial)</b></h5>
+		</div>
+	</div>
+</div>
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4 id="headername">Store Registered</h4>
+      <p id="modaltext"></p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+    </div>
+  </div>
+
+<div class="container">
+<div class="row">
+    <div class="input-field col offset-s3 s5">
+      <input id="store" type="text" class="validate" onfocusout="check_store_availability(this.value)" maxlength="20">
+      <label for="store">Store name</label>
+	  <p id="store_availability">Store is not available</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-field col offset-s3 s5">
+      <input id="email" type="email" class="validate" onfocusout=check_progress() maxlength="40">
+      <label for="email">E-mail</label>
+    </div>
+  </div>
+    <div class="row">
+    <div class="input-field col offset-s3 s5">
+      <input id="username" type="text" class="validate">
+      <label for="username">Username</label>
+    </div>
+  </div>
+  <div class="row">
+  <p class="col offset-s3">
+      <label>
+        <input type="checkbox" id="autogen_pw" onclick="check_progress(); show_hide_pw_box(this.checked);" checked />
+        <span class="black-text">Automatically Generate Password</span>
+      </label>
+    </p>
+		<div class="row" id="pw_box" style="display:none">
+	<div class="input-field col offset-s3 s5">
+      <input id="password" type="password" class="validate" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" onfocusout=check_progress()>
+      <label for="password">Password</label>
+    </div>
+	</div>
+  </div>
+  <!--<div class="row">
+    <div class="input-field col offset-s3 s5">
+      <input id="password" type="password" class="validate">
+      <label for="password">Password</label>
+    </div>
+  </div>-->
+  <div class="row">
+   <p class="col offset-s3">
+      <label>
+        <input type="checkbox" id="agree_tos" onclick=check_progress() />
+        <span class="black-text">Accept <b><a href="tos.html">Terms of Service</a></b></span>
+      </label>
+    </p>
+	</div>
+  
+	<div class="row">
+		<div class="col offset-s3">
+			<a class="disabled waves-effect waves-light btn-large" id="submit" href="#" onclick=submit_form(this)>Submit</a>
+		</div>
+		<div class="col offset-s3">
+			<a class="waves-effect waves-light btn-large" href="index.html">Return</a>
+		</div>
+	</div>
+
+</div>
+<div class="row">
+<div id="progress-bottom" class="green accent-3 col s12" style="position: absolute; bottom: 0; height: 3px; width: 0%; padding: 0">
+</div>
+</div>
+
+<script>
+var registering_account = false;
+function submit_form()
+{
+	$("#submit").text("Submitting...");
+	$("#submit").addClass("disabled");
+	registering_account = true;
+	register($("#store").val(), $("#email").val(), $("#username").val(), $("#password").val(), $("#autogen_pw").prop("checked"), $("#agree_tos").prop("checked"));
+}
+
+function show_hide_pw_box(b)
+{
+	if (b)
+		$("#pw_box").css("display", "none")
+	else
+		document.getElementById("pw_box").style = "";
+}
+
+
+var elem = document.getElementById("progress-bottom");
+var width = 0;
+/*x = setInterval(function(){
+if (++width == 100) clearInterval(x);
+elem.style.width = width + "%";
+}, 10);
+*/
+
+var store_available = false;
+
+function check_progress()
+{
+	$("#submit").addClass("disabled");
+	if (!$("#agree_tos").prop("checked"))
+		return;	
+	if ($("#email").val().length == 0)
+		return;
+	if ($("#email").hasClass("invalid"))
+		return;
+	if ($("#username").val().length == 0)
+		return;
+	if ($("#store").val().length == 0 || !store_available)
+		return;
+		if (registering_account)
+		return;
+		
+		if ($("#autogen_pw").prop("checked") == false &&
+			($("#password").hasClass("invalid") || $("#password").val().length === 0))
+			return;
+		
+	$("#submit").removeClass("disabled");
+}
+
+if (typeof check_store_availability === "undefined") check_store_availability = function(storename)
+{
+	store_available = true;
+}
+
+ $(document).ready(function(){
+    $('.modal').modal();
+  });
+</script>
+
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+</html>

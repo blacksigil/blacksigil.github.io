@@ -1,0 +1,1881 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="materialize/css/materialize.min.css">
+<link rel="stylesheet" href="utils.css">
+<!--<link rel="stylesheet" href="noUiSlider/nouislider.min.css">-->
+<link rel="stylesheet" href="materialize/extras/nouislider.css">
+<link rel="stylesheet" href="home.css">
+
+<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<!--<script type="text/javascript" src="noUiSlider/nouislider.min.js"></script>-->
+<script type="text/javascript" src="wnumb-1.2.0/wNumb.min.js"></script>
+<script type="text/javascript" src="materialize/extras/nouislider.js"></script>
+
+<script type="text/javascript" src="home.js"></script>
+
+</head>
+<body onload="on_page_load()" class="grey lighten-5">
+  <header>
+  <nav class="orange accent-3">
+    <div class="nav-wrapper">
+      <!--<a href="#!" class="brand-logo">Logo</a>-->
+      <a href="#" data-target="mysidenav" class="sidenav-trigger" style="display:block"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#" onclick=contact_support()>Contact Support</a></li>
+        <li><a href="#" onclick=show_documentation()>Documentation</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+  <ul id="mysidenav" class="sidenav tabs">
+    <li>
+      <div class="row orange-text text-accent-4">
+        <div class="col"><i class="medium material-icons">code</i></div>
+        <div class="col"><p class="mybrand">DRM++</p></div>
+      </div>
+    </li>
+       <li class="tab side sidenav-close"><a class="active" href="#t1"><span>Dashboard</span></a></li>
+       <li class="tab side sidenav-close" onclick="request_apps_list()"><a href="#t2"><span>Apps</span></a></li>
+       <li class="tab side sidenav-close" onclick=request_users_list()><a href="#t3"><span>Users</span></a></li>
+       <li class="tab side sidenav-close" onclick="request_licenses_list()"><a href="#t4"><span>Licenses</span></a></li>
+       <li class="tab side sidenav-close" onclick="query_devices_list()"><a href="#t7"><span>Devices</span></a></li>
+       <li class="tab side sidenav-close" onclick="query_debuglogs()"><a href="#t5"><span>Debug Logs</span></a></li>
+       <li class="tab side sidenav-close" onclick="query_loginlogs()"><a href="#t6"><span>Login Logs</span></a></li>
+       <li class="tab side sidenav-close" onclick="query_invites()" ><a href="#t8"><span>Invite codes</span></a></li>
+       <li class="tab side sidenav-close" onclick="query_sessions()"><a href="#t9"><span>Sessions</span></a></li>
+       <li class="tab side sidenav-close" onclick="query_bans()"><a href="#t10"><span>Bans</span></a></li>
+       <li class="tab side sidenav-close" onclick="query_ssv()"><a href="#t11"><span>Server-side variables</span></a></li>
+       <li class="tab side sidenav-close" onclick="query_plugins()"><a href="#t12"><span>Plugins</span></a></li>
+       <li class="tab side sidenav-close" onclick="query_subscriptions()"><a href="#t13"><span>Subscriptions</span></a></li>
+  </ul>
+</header>
+
+<main>
+  <ul class="dropdown-content" id="dropdown1">
+    <li><a href="#" class="black-text" onclick="kill_admin_session(whom)">Logout</a></li>
+  </ul>
+
+  <div id="modal1" class="modal">
+  <div class="modal-content">
+<h3 class="deep-orange-text text-lighten-1">Access Keys</h3>
+  <table style="position: relative; top: -30px">
+    <thead>
+      <tr>
+        <th></th>
+        <!--<th></th>-->
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="accesskeylist">
+      <tr class="red lighten-4" id="access-key-1">
+        <td>ACCESS_KEY_1<span class="badge red black-text">Revoked</span></td>
+        <td><a class="waves-effect waves-light btn blue lighten-1 purple-text text-darken-4 right" href="#">Restore</a></td>
+      </tr>
+      <tr>
+        <td>test</td>
+        <td><a class="waves-effect waves-light btn red lighten-1 purple-text text-darken-4 right" href="#">Revoke</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="accesskeys-preloader1">
+    <center>
+    <div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+
+    <div class="spinner-layer spinner-red">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+
+    <div class="spinner-layer spinner-yellow">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+
+    <div class="spinner-layer spinner-green">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+  </center>
+  </div> <!--end preloader wrapper-->
+
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-light btn light-green accent-2 green-text text-darken-4" href="#" onclick=generate_access_key()>Generate new access key</a>
+
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div> <!-- end modal 1 -->
+
+<div id="modal_appsettings" class="modal">
+  <div class="modal-content">
+    <h3 class="deep-orange-text text-lighten-1">App Settings</h3>
+    <div id="loading_progress_app_settings" class="progress">
+        <div class="indeterminate"></div>
+      </div>
+
+      <div class="card"> <!-- container card -->
+
+        <!-- begin section 1-->
+      <div class="card-content">
+        <span class="card-title">Login</span>
+        <div class="row">
+          <div class="col">
+            <label>
+              <input id="setting_app_limited_access_login" type="checkbox" class="filled-in" checked="checked" onclick="save_app_settings()" />
+              <span>Allow unlicensed login (limited access)</span>
+            </label>
+          </div>
+          <div class="col">
+            <label>
+              <input id="setting_app_device_locator" type="checkbox" class="filled-in" checked="checked" onclick="save_app_settings()" />
+              <span>Device Locator</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">App Configuration</span>
+            <div class="row">
+              <div class="col s3">
+                  <span>Max Sessions</span>
+                  <div class="range-field">
+                    <input type="range" id="setting_app_max_sessions" min="0" max="100" value="5" oninput="oninputchanged(this.value, 'max_sessions_app'); save_app_settings();" />
+                  </div>
+                  <span id="max_sessions_app"></span>
+              </div>
+            </div>
+          </div>
+        </div> <!-- end app settings -->
+      </div> <!-- end section 1-->
+
+    </div> <!-- end container card -->
+
+    <div class="card">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col">
+                    <span class="card-title">HWID Checks</span>
+                  </div>
+                  <div class="col">
+                    <label style="position: relative; top: 10px">
+                    <input id="setting_hwid_enabled_app" type="checkbox" class="filled-in" checked="checked" onclick="save_app_settings()" />
+                    <span>Enabled</span>
+                    </label>
+                  </div>
+                </div>
+
+                    <div class="card-panel" style="margin-top: 10px">
+                      <div class="row" id="app_hwid_options">
+
+                      </div>
+
+                    </div> <!--end hwid checks list -->
+
+              </div>
+            </div> <!-- end hwid container -->
+
+
+        <div class="card">
+        <div class="card-content">
+          <div class="row">
+            <div class="col">
+              <span class="card-title">Security Settings</span>
+            </div>
+          </div>
+          <div class="card-panel" style="margin-top: 10px">
+            <div class="row" id="app_security_config">
+            </div>
+          </div>
+
+        </div>
+      </div> <!--end security settings card-->
+
+</div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div> <!-- end modal modal_appsettings-->
+
+<div id="modal2" class="modal">
+    <div class="modal-content">
+      <h3 class="deep-orange-text text-lighten-1">Settings</h3>
+
+      <div id="loading_progress_store_settings" class="progress">
+          <div class="indeterminate"></div>
+        </div>
+      <h6>User, license settings are overriden by store ones, which are overriden by app settings.</h6>
+
+      <div class="card">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Registration</span>
+        <div class="row">
+          <div class="col">
+            <label>
+            <input id="setting_disable_registration" type="checkbox" class="filled-in" onclick="save_store_settings()" />
+            <span>Disable new registrations</span>
+          </label>
+          </div>
+          <div class="col">
+            <label>
+            <input id="setting_reg_require_captcha" type="checkbox" class="filled-in" checked="checked" onclick="save_store_settings()" />
+            <span>Require Captcha</span>
+          </label>
+          </div>
+          <div class="col">
+            <label>
+              <input id="setting_reg_require_email" type="checkbox" class="filled-in" checked="checked" onclick="save_store_settings()" />
+              <span>Require E-mail</span>
+            </label>
+          </div>
+          <div class="col">
+            <label>
+              <input id="setting_reg_require_invite_code" type="checkbox" class="filled-in" checked="checked" onclick=save_store_settings() />
+              <span>Require Invite Code</span>
+            </label>
+          </div>
+          <div class="col">
+            <div class="input-field">
+                <select id="setting_reg_max_registrations_per_device" onchange="save_store_settings()" >
+                  <option value="" disabled>Choose your option</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4" selected>Unlimited</option>
+                </select>
+                <label>Max Registrations Per Device</label>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+        <div class="card-content">
+          <span class="card-title">Login</span>
+          <div class="row">
+            <div class="col">
+              <label>
+                <input id="setting_store_limited_access_login" type="checkbox" class="filled-in" checked="checked" onclick="save_store_settings()" />
+                <span>Allow unlicensed login (limited access)</span>
+              </label>
+            </div>
+            <div class="col">
+              <label>
+                <input id="setting_store_device_locator" type="checkbox" class="filled-in" checked="checked" onclick="save_store_settings()" />
+                <span>Device Locator</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Default App Specific Settings Configuration</span>
+              <div class="row">
+                <div class="col s3">
+                    <span>Max Sessions</span>
+                    <div class="range-field">
+                      <input type="range" id="setting_app_default_max_sessions" min="0" max="100" value="5" oninput="oninputchanged(this.value, 'max_sessions_app_default'); save_store_settings();" />
+                    </div>
+                    <span id="max_sessions_app_default"></span>
+                </div>
+              </div>
+            </div>
+          </div> <!-- end default app settings -->
+
+        </div>
+
+        <!--<div class="card-footer">-->
+          <div class="card">
+          <div class="card-content">
+            <div class="row">
+              <div class="col">
+                <span class="card-title">HWID Checks (default)</span>
+              </div>
+              <div class="col">
+                <label style="position: relative; top: 10px">
+                <input id="setting_hwid_enabled" type="checkbox" class="filled-in" checked="checked" onclick="save_store_settings()" />
+                <span>Enabled</span>
+                </label>
+              </div>
+            </div>
+
+                <div class="card-panel" style="margin-top: 10px">
+                  <div class="row" id="store_hwid_options">
+
+                    <div class="col">
+                      <div class="card">
+                        <div class="card-content">
+                          <span class="card-title">
+                            <label>
+                              <input id="hwid-gpu-enabled" type="checkbox" class="filled-in" checked="checked" />
+                              <span class="black-text">GPU</span>
+                            </label>
+                          </span>
+
+                          <p>
+                            <label>
+                              <input type="checkbox" checked="checked" />
+                              <span class="blue-text text-darken-4">UUID</span>
+                            </label>
+                          </p>
+
+                          <p>
+                            <label>
+                              <input type="checkbox" checked="checked" />
+                              <span class="blue-text text-darken-4">Serial Number</span>
+                            </label>
+                          </p>
+
+                        </div>
+                      </div>
+                  </div> <!--end card 1 col-->
+                  </div>
+                </div> <!--end hwid checks list -->
+
+          </div>
+        </div> <!-- end hwid container -->
+        <!--</div>--> <!-- end footer -->
+
+        <div class="card">
+        <div class="card-content">
+          <div class="row">
+            <div class="col">
+              <span class="card-title">Security Settings (default)</span>
+            </div>
+          </div>
+          <div class="card-panel" style="margin-top: 10px">
+            <div class="row" id="default_security_config">
+            </div>
+          </div>
+
+        </div>
+      </div> <!--end security settings card-->
+
+      </div> <!-- end container card -->
+
+</div> <!-- end modal content -->
+    <div class="modal-footer">
+      <a href="#" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div> <!-- end modal 2 -->
+
+  <div id="modal3" class="modal">
+  <div class="modal-content">
+    <h3 class="orange-text" id="manage_user_name">Manage User</h3>
+    <table class="striped">
+      <thead>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Role</td>
+          <td></td>
+          <td>
+            <select class="select-user-role" id="select-user-role" onchange="update_user_role()">
+              <option value="0">Admin</option>
+              <option value="1">Staff</option>
+              <option value="2" selected>User</option>
+              <option value="3">Banned</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Devices</td>
+          <td><span class="new badge blue" data-badge-caption="total">0</span></td>
+          <td>
+            <a class="btn" onclick=user_view_devices()>Manage</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Licenses</td>
+          <td><span class="new badge blue" data-badge-caption="total">0</span></td>
+          <td>
+            <a class="btn" onclick=user_view_licenses()>Manage</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Login Logs</td>
+          <td><span class="new badge blue" data-badge-caption="total">0</span></td>
+          <td>
+            <a class="btn" onclick=user_view_loginlogs()>Manage</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Debug Logs</td>
+          <td><span class="new badge blue" data-badge-caption="total">0</span></td>
+          <td>
+            <a class="btn" onclick=user_view_debuglogs()>Manage</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <div class="row">
+      <div class="col">
+        <a class="btn waves-effect waves-blue grey-text text-darken-3" onclick=user_reset_password()>Reset password</a>
+      </div>
+      <div class="col" id="manage_user_ban">
+        <a class="btn waves-effect waves-blue deep-orange accent-2 brown-text text-darken-4" onclick=ban_user_and_devices() href="#">Ban</a>
+      </div>
+      <div class="col" id="manage_user_unban">
+        <a class="btn waves-effect waves-blue yellow accent-4 brown-text text-darken-4" onclick=unban_user_and_devices() href="#">Unban</a>
+      </div>
+      <div class="col">
+        <a class="btn waves-effect waves-blue green accent-2 green-text text-darken-4" onclick=user_multiaccount_finder()>Multi-account finder</a>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div> <!-- end modal3 -->
+
+<div id="modal_ban" class="modal">
+  <div class="modal-content">
+    <center>
+    <div class="preloader-wrapper small active" id="ban-load-user-info-progress">
+  <div class="spinner-layer spinner-green-only">
+    <div class="circle-clipper left">
+      <div class="circle"></div>
+    </div><div class="gap-patch">
+      <div class="circle"></div>
+    </div><div class="circle-clipper right">
+      <div class="circle"></div>
+    </div>
+  </div>
+</div>
+</center>
+  <div id="user-info">
+    <h4 id="relateddeviceslabel">Devices (3000)</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <p>
+             <label>
+               <input type="checkbox" onclick="userinfo_devices_check_uncheck_all(this)" />
+               <span></span>
+             </label>
+            </p>
+          </th>
+          <th>Device ID</th>
+          <th>OS</th>
+          <th>Registration IP</th>
+          <th>Current IP</th>
+          <th>Last Login</th>
+          <th>Registered</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="user-info-devices">
+      </tbody>
+    </table>
+    <ul class="pagination" id="user-info-devices_pages">
+       <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+       <li class="active"><a href="#!">1</a></li>
+       <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
+    <h4 id="relatedaccountslabel">Related Accounts (429)</h4>
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>
+            <p>
+             <label>
+               <input type="checkbox" onclick="userinfo_related_accounts_check_uncheck_all(this)" />
+               <span></span>
+             </label>
+            </p>
+          </th>
+          <th>User</th>
+        </tr>
+      </thead>
+      <tbody id="user-info-related-accs">
+
+      </tbody>
+    </table>
+    <p>Related accounts will search using HWID info from up to (4) selected devices, or the first 4 devices.</p>
+    <ul class="pagination" id="user-info-related_pages">
+       <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+       <li class="active"><a href="#!">1</a></li>
+       <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
+    <h4>Options</h4>
+    <div style="padding: 10px; border: 1px solid grey; margin-bottom: 5px">
+    <p>Ban ALL Devices</p>
+    <div class="switch">
+        <label>
+          No
+          <input type="checkbox" id="userinfo-ban_all_devices">
+          <span class="lever"></span>
+          Yes
+        </label>
+    </div>
+
+    <p>Ban ALL Related Accounts</p>
+    <div class="switch">
+        <label>
+          No
+          <input type="checkbox" id="userinfo-ban_all_account_relations">
+          <span class="lever"></span>
+          Yes
+        </label>
+    </div>
+    <br>
+
+    <p>
+          <label>
+            <input type="checkbox" checked="checked" id="userinfo-ban_current_acc" />
+            <span>Ban Account</span>
+          </label>
+    </p>
+
+  </div>
+  <br>
+  <div id="banduration-slider"></div>
+  <p class="grey-text" style="margin-top: 4px; font-size: 12px">Ban Duration (hours, 0 = permanent)</p>
+
+    <a class="btn waves-effect waves-blue deep-orange accent-2 brown-text text-darken-4 modal-close" href="#" onclick=do_ban()>Ban</a>
+  </div>
+
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div> <!-- end account/device ban helper -->
+
+<div id="modal_pw_reset_result" class="modal">
+    <div class="modal-content">
+      <h3 id="pw_reset_user"></h3>
+      <div class="row">
+        <div class="input-field col s6">
+          <input disabled id="reset_r_passwordbox" type="text" class="validate">
+          <label for="reset_r_passwordbox">Password</label>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- end modal_pw_reset_result -->
+
+  <div id="modal_licenses_generated" class="modal">
+      <div class="modal-content">
+        <div class="row">
+           <form class="col s12">
+             <div class="row">
+               <div class="input-field col s12">
+                 <textarea id="licensekeys" class="materialize-textarea active"></textarea>
+                 <label for="licensekeys">Generated Keys</label>
+               </div>
+             </div>
+           </form>
+        </div>
+      </div>
+
+    </div> <!-- end modal_licenses_generated -->
+
+  <div id="create_license_modal" class="modal">
+  <div class="modal-content">
+    <h3 class="orange-text">Create License</h3>
+    <div class="row">
+      <div class="col s10">
+        <div class="row">
+          <div id="license_max_devices-slider"></div>
+          <p>Max devices (0 for unlimited)</p>
+        </div>
+        <div class="row">
+          <div id="license_max_sessions-slider"></div>
+          <p>Max sessions (0 for unlimited)</p>
+        </div>
+        <div class="row">
+          <div id="license_max_activations-slider"></div>
+          <p>Max Activations (0 for unlimited)</p>
+        </div>
+        <div class="row">
+          <div id="license_num_copies-slider"></div>
+          <p>Number of copies</p>
+        </div>
+        <div class="row">
+          <div class="chips chips-autocomplete" id="create_license-applist"></div>
+          <p>Tied apps</p>
+        </div>
+      </div>
+  </div>
+
+  <form action="#">
+    <p>Expiration</p>
+    <p>
+      <label>
+        <input name="group1" type="radio" value="1" />
+        <span>None</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input name="group1" type="radio" checked value="2" />
+        <span>Date and time picker</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input name="group1" type="radio" value="3" />
+        <span>Time slider</span>
+      </label>
+    </p>
+  </form>
+
+  <div id="license_duration-datetime">
+    <input type="text" class="datepicker" id="datepicker1">
+    <label for="datepicker1" class="active">Date</label>
+    <input type="text" class="timepicker" id="timepicker1">
+    <label for="timepicker1" class="active">Time</label>
+  </div>
+
+  <div id="license_duration-sliders" style="display:none">
+    <div class="row">
+      <div class="col s10">
+        <div class="row">
+          <div id="license-years-slider"></div>
+          <p class="grey-text" style="margin-top: 2px; font-size: 12px">Years</p>
+        </div>
+        <div class="row">
+          <div id="license-months-slider"></div>
+          <p class="grey-text" style="margin-top: 2px; font-size: 12px">Months</p>
+      </div>
+          <div class="row">
+            <div id="license-days-slider"></div>
+            <p class="grey-text" style="margin-top: 2px; font-size: 12px">Days</p>
+
+        </div>
+      <div class="row">
+        <div id="license-hours-slider"></div>
+        <p class="grey-text" style="margin-top: 2px; font-size: 12px">Hours</p>
+      </div>
+      <div class="row">
+        <div id="license-minutes-slider"></div>
+        <p class="grey-text" style="margin-top: 2px; font-size: 12px">Minutes</p>
+      </div>
+      </div>
+    </div>
+    <p id="current-license-time"></p>
+  </div>
+
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+    <a href="#!" class="waves-effect waves-green btn-flat" onclick=create_license()>Create</a>
+  </div>
+</div> <!-- end create_license_modal -->
+
+<div id="manage_license_modal" class="modal">
+<div class="modal-content">
+  <h3 class="orange-text" id="cl_license_key">(License key)</h3>
+  <h4>Attached Devices</h4>
+  <div id="device_container">
+  <div class="chip">
+    Device1
+    <i class="close material-icons" onclick=remove_device_from_license(this)>close</i>
+  </div><div class="chip">
+    Device2
+    <i class="close material-icons">close</i>
+  </div><div class="chip">
+    Device3
+    <i class="close material-icons">close</i>
+  </div>
+</div>
+
+</div>
+<div class="modal-footer">
+  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+</div>
+</div> <!-- end create_license_modal -->
+
+
+  <div id="manage_all_modal" class="modal">
+      <div class="modal-content">
+        <h3>Managing all licenses</h3>
+        <!--to-do allow applying filter-->
+        <div class="row">
+        <a href="#" class="btn">Reset all licenses devices to zero</a>
+      </div>
+      <div class="row">
+      <a href="#" class="btn">Add time to all licenses</a>
+    </div>
+    <div class="row">
+        <a href="#" class="btn">Subtract time from all licenses</a>
+      </div>
+
+    </div>
+
+    </div> <!-- end manage all licenses modal -->
+
+    <div id="manage_device_modal" class="modal">
+    <div class="modal-content">
+      <h3 class="orange-text" id="device_id-1">(Device ID)</h3>
+      <h4>Device Info</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody id="md-deviceinfo">
+        </tbody>
+      </table>
+
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+    </div> <!-- end manage_device_modal -->
+
+
+    <div id="create_invite_code" class="modal">
+    <div class="modal-content">
+      <h3 class="black-text">Create Invites</h3>
+
+      <div class="row">
+        <div class="col s11">
+        <div id="max-uses-slider"></div>
+        <p class="grey-text" style="margin-top: 2px; font-size: 12px">Max Uses (0 for unlimited)</p>
+      </div>
+      <div class="col s11">
+      <div id="invitecode-copies-slider"></div>
+      <p class="grey-text" style="margin-top: 2px; font-size: 12px">Number of Copies</p>
+    </div>
+    </div>
+
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat blue" onclick="create_invites()">Create</a>
+    </div>
+  </div> <!-- end create_invite_code -->
+
+  <div id="modal_invites_generated" class="modal">
+      <div class="modal-content">
+        <div class="row">
+           <form class="col s12">
+             <div class="row">
+               <div class="input-field col s12">
+                 <textarea id="generated_invites" class="materialize-textarea active"></textarea>
+                 <label for="generated_invites">Generated invite codes</label>
+               </div>
+             </div>
+           </form>
+        </div>
+      </div>
+
+    </div> <!-- end modal_licenses_generated -->
+
+  <div id="modal_create_ssv" class="modal">
+      <div class="modal-content">
+        <h3>Create SSV</h3>
+        <div class="row">
+        <div class="input-field col s2">
+          <input placeholder="" id="ssv-name" type="text">
+          <label for="ssv-name">Variable Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s2">
+          <select id="ssv-var-type" onchange=create_ssv_variable_type_changed(this)>
+            <option value="" disabled selected>Choose</option>
+            <option value="str">String</option>
+            <option value="int">Integer</option>
+            <option value="bin">Binary</option>
+          </select>
+          <label>Variable Type</label>
+        </div>
+      </div>
+      <div class="row">
+        <div id="ssv-variable_type_str" style="display:none">
+          <div class="input-field col s2">
+            <input placeholder="" id="ssv-string" type="text">
+            <label for="ssv-string">String Variable Value</label>
+          </div>
+        </div>
+        <div id="ssv-variable_type_int" style="display:none">
+          <div class="input-field col s2">
+            <input placeholder="" id="ssv-int" type="number">
+            <label for="ssv-int">Integer Variable Value</label>
+          </div>
+        </div>
+        <div id="ssv-variable_type_bin" style="display:none">
+          <div class="input-field col s12">
+          <textarea id="ssv-bin" class="materialize-textarea"></textarea>
+          <label for="ssv-bin">Hex encoded binary data</label>
+        </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s3">
+        <div class="chips chips-autocomplete" id="create_ssv-applist"></div>
+        <label for="create_ssv-applist">Tied apps</label>
+        </div>
+      </div>
+      <p>
+           <label>
+             <input id="ssv-allow-unlicensed-access" type="checkbox" class="filled-in" />
+             <span>Allow unlicensed access</span>
+           </label>
+         </p>
+
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat blue" onclick="create_ssv()">Create</a>
+      </div>
+  </div> <!-- end create ssv modal -->
+
+  <div id="modal_server_plugin_list" class="modal">
+      <div class="modal-content">
+        <h3>Server Plugins</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Version</th>
+                <th>ID</th>
+              </tr>
+            </thead>
+            <tbody id="spl">
+            </tbody>
+          </table>
+      </div>
+    </div> <!-- end modal_server_plugin_list -->
+
+  <div id="t1" class="col s12">
+
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <h3 class="card-title" id="store-name"><!--Store Name-->&nbsp;</h3>
+
+          <a class="waves-effect waves-light btn cyan cyan-text text-darken-4 modal-trigger" href="#modal2" onclick="prequery_store_settings()">Store Settings</a>
+          <a class="waves-effect waves-light btn cyan cyan-text text-darken-4 modal-trigger" href="#modal1" onclick=set_access_keys_target(null)>Access Keys</a>
+
+      <div class="card">
+        <div class="card-title cyan cyan-text text-darken-4"> <!--light-blue accent-3 cyan-text text-lighten-5-->
+          <h3 class="sessions_title">Sessions</h3>
+        </div>
+        <div class='card-content'>
+          <div class="progress" id="preloader1">
+            <div class="indeterminate"></div>
+          </div>
+
+        <div class="row" id="admin_sessionlist">
+          <div class="card">
+
+          </div>
+        </div> <!-- end row -->
+      </div> <!-- end card-content -->
+      </div> <!-- end sessions card -->
+
+    </div>
+  </div> <!-- end stores card -->
+
+    </div> <!-- end container -->
+
+  </div> <!-- end t1-->
+
+  <div id="t2" class="col s12">
+
+  <div id="create_app_modal" class="modal">
+   <div class="modal-content">
+     <h4>Create App</h4>
+     <div class="row">
+       <div class="input-field col s6">
+          <input id="appname_input" type="text" class="validate" maxlength="20">
+          <label for="appname_input">App name</label>
+          <p class="red-text" style="display:none" id="create_app_error_msg">An error message.</p>
+          <a class="btn black-text" onclick="_create_app()">Create</a>
+        </div>
+      </div>
+   </div>
+
+   <div class="modal-footer">
+     <a class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+   </div>
+
+ </div>
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-title">
+                <h3>Apps</h3>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>App ID</th>
+                    <th>Name</th>
+                    <th>Licenses</th>
+                    <th>Debug logs</th>
+                    <th>Logins (24h)</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="applist">
+                  <tr id="app-1">
+                    <td>1</td>
+                    <td>App1</td>
+                    <td>3</td>
+                    <td>371</td>
+                    <td>1</td>
+                    <td><a class="btn waves-effect waves-light activator" onclick=manageapp(this)>Manage</a></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button data-target="create_app_modal" class="btn waves-effect waves-light teal darken-4 cyan-text text-accent-2 modal-trigger" style="position: absolute; bottom: 25px; right: 30px; ">Create</button>
+              <ul class="pagination" id="app_pages">
+               <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+               <li class="active"><a href="#!">1</a></li>
+               <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+             </ul>
+
+            </div>
+            <div class="card-reveal">
+            <div class="row">
+              <span class="card-title grey-text text-darken-4" id="appname">App name<i class="material-icons right">close</i></span>
+            </div>
+            <div class="optionscontainer">
+            <div class="row" >
+              <div class="col">
+                <a class="btn waves-effect waves-light orange black-text modal-trigger" href="#modal_appsettings" onclick="prequery_app_settings()">Settings</a>
+              </div>
+              <div class="col">
+                <a class="btn waves-effect waves-light orange black-text modal-trigger" href="#modal1" onclick="set_access_keys_target(appid)">Access Keys</a>
+              </div>
+              <div class="col">
+                <a class="btn waves-effect waves-light orange black-text">Attached Devices</a>
+              </div>
+            </div>
+
+          </div>
+
+              <a class="btn waves-effect waves-light black-text orange" style="position: absolute; bottom: 15; left: 15" onclick="download_public_key()">Download Public Key</a>
+              <a class="btn waves-effect waves-light red accent-2 pink-text text-darken-4" style="position: absolute; bottom: 15; right: 15" onclick="delete_app()">Delete App</a>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div> <!-- end t2 -->
+
+  <div id="t3" class="col s12">
+    <div class="container">
+      <div class="card-panel">
+        <h3>Users</h3>
+        <div class="row">
+          <div class="col">
+        <div class="chips" id="userssearch">
+          <input>
+        </div>
+      </div>
+        <!--<div class="col">
+        <a class="btn waves-effect waves-light" style="margin-top: 20px" href="#" onclick="search_users()"><i class="large material-icons">search</i></a>
+        </div>
+      -->
+      </div>
+
+        <table>
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>E-mail</th>
+            <th>Registration IP</th>
+            <th>Join Date</th>
+            <th>Last Login</th>
+            <th>Role</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="userlist">
+          <tr id="user-UID1EXAMPLE">
+            <td>UID1EXAMPLE</td>
+            <td>example</td>
+            <td>example@example.com</td>
+            <td>127.0.0.1</td>
+            <td>2019-1-11 3:45 PM</td>
+            <td>2019-1-12 3:00 AM</td>
+            <td id='user-UID1EXAMPLE-role' data-role='0'>Admin</td>
+            <!--modal-trigger  href="#modal3"-->
+            <td><a class="btn waves-effect waves-light" href="#" onclick=manageuser(this)>Manage</a></td>
+          </tr>
+        </tbody>
+      </table>
+        <ul class="pagination" id="user_pages">
+         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+         <li class="active"><a href="#!">1</a></li>
+         <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+       </ul>
+
+      </div>
+
+    </div>
+  </div> <!-- end t3 (users) -->
+
+  <div id="t4" class="col s12">
+    <div class="xcontainer" style="padding: 5px">
+      <div class="card-panel">
+        <h3>Licenses</h3>
+        <div class="row">
+          <div class="col">
+        <div class="chips" id="license_search">
+          <input>
+        </div>
+      </div>
+        <!--<div class="col">
+        <a class="btn waves-effect waves-light" style="margin-top: 20px" href="#" onclick="search_users()"><i class="large material-icons">search</i></a>
+        </div>
+      -->
+      </div>
+
+        <table>
+          <thead>
+          <tr>
+            <th>
+              <p>
+               <label>
+                 <input type="checkbox" onclick="licenses_check_uncheck_all(this)" />
+                 <span></span>
+               </label>
+              </p>
+            </th>
+            <th>Database ID</th>
+            <th>License Key</th>
+            <th>Devices</th>
+            <th>Sessions</th>
+            <th>Activations</th>
+            <th>Created</th>
+            <th>Duration / Expiration</th>
+            <th>Users</th>
+            <th>Tied Apps</th>
+            <th>Manage</th>
+          </tr>
+        </thead>
+        <tbody id="licenselist">
+          <tr id="license-ID1">
+            <td>
+              <p>
+               <label>
+                 <input type="checkbox" />
+                 <span></span>
+               </label>
+              </p>
+            </td>
+            <td>ID1</td>
+            <td>14983faf-c488-4028-b9b2-e3c0e822c556</td>
+            <td>0 / 3</td>
+            <td>0 / 2</td>
+            <td>0 / 4</td>
+            <td>2019-1-12 3:00 AM</td>
+            <td>2019-2-12 3:00 AM</td>
+            <td>
+              <div class="chip" id="license_tag-uid-11231">User1</div>
+              <div class="chip" id="license_tag-uid-11232">User2</div>
+            </td>
+            <td>
+              <div class="chip" id="license_tag-appid-112131">App1</div>
+            </td>
+            <td><a class="btn waves-effect waves-light orange black-text" href="#" onclick=manage_license(this)>Manage</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <div class="row right">
+        <div class="input-field col" style="position: relative; top: -20px">
+          <select id="license_go_select">
+            <option value="1">Delete</option>
+            <option value="2">Manage</option>
+          </select>
+          <label>With Selected</label>
+        </div>
+        <div class="col">
+          <button class="btn waves-effect waves-light orange black-text" onclick=licenses_execute_go()>Go</button>
+        </div>
+        <div class="col">
+          <button data-target="manage_all_modal" class="btn waves-effect waves-light orange black-text modal-trigger">Manage All</button>
+        </div>
+        <div class="col">
+          <!--teal darken-4 cyan-text text-accent-2-->
+          <button data-target="create_license_modal" class="btn waves-effect waves-light orange black-text modal-trigger" onclick=setup_create_license_modal()> Create</button>
+        </div>
+      </div>
+
+      <ul class="pagination" id="license_pages">
+         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+         <li class="active"><a href="#!">1</a></li>
+         <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+
+      </div>
+
+    </div>
+  </div> <!-- end t4 (licenses) -->
+
+  <div id="t5">
+    <div class="xcontainer" style="padding: 5px; overflow: auto; width: auto">
+      <div class="card-panel">
+        <div class="card-content">
+          <h3>Debug Logs</h3>
+          <div class="row">
+            <div class="col">
+              <div class="chips" id="debuglog_search">
+              </div>
+            </div>
+          </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Message</th>
+            <th>IP</th>
+            <th>User ID</th>
+            <th>App ID</th>
+            <th>Lookup Code</th>
+            <th>Log time</th>
+            <th>Log type</th>
+            <th>Privileges Required</th>
+          </tr>
+        </thead>
+        <tbody id="debuglogs">
+          <tr id="debuglog-id1">
+            <td>Example debug log</td>
+            <td>::1</td>
+            <td>USERID1</td>
+            <td>APPID1</td>
+            <td>N/A</td>
+            <td>2019-01-02 3:30 PM</td>
+            <td>Warning</td>
+            <td>Admin</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row">
+        <div class="col">
+      <ul class="pagination" id="debuglog_pages">
+         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+         <li class="active"><a href="#!">1</a></li>
+         <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+    </div>
+        <div class="col" style="max-width: 100px">
+        <input id="debuglog_pagenum" type="number" min="1" value="1">
+        <label for="debuglog_pagenum">Jump to page</label>
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </div>
+
+  </div> <!-- end t5 (debug logs) -->
+
+  <div id="t6" class="col s12">
+    <div class="xcontainer" style="padding: 5px">
+      <div class="card-panel">
+        <div class="card-content">
+          <h3>Login Logs</h3>
+          <div class="row">
+            <div class="col">
+              <div class="chips" id="loginlog_search">
+              </div>
+            </div>
+          </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>IP</th>
+            <th>User ID</th>
+            <th>App ID</th>
+            <th>Log time</th>
+            <th>Type</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody id="loginlogs">
+          <tr id="loginlog-id1">
+            <td>::1</td>
+            <td>USERID1</td>
+            <td>APPID1</td>
+            <td>2019-01-02 3:30 PM</td>
+            <td>Windows (x64)</td>
+            <td class="green-text">OK</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row">
+        <div class="col">
+      <ul class="pagination" id="loginlog_pages">
+         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+         <li class="active"><a href="#!">1</a></li>
+         <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+    </div>
+        <div class="col" style="max-width: 100px">
+        <input id="loginlog_pagenum" type="number" min="1" value="1">
+        <label for="loginlog_pagenum">Jump to page</label>
+        </div>
+      </div>
+
+    </div>
+    </div>
+    </div>
+  </div> <!-- end t6 (login logs) -->
+
+  <div id="t7" class="col s12">
+    <div class="xcontainer" style="padding: 5px">
+      <div class="card-panel">
+        <div class="card-content">
+          <h3 onclick="app.hi()">Devices</h3>
+          <div class="row">
+            <div class="col">
+              <div class="chips" id="device_search">
+              </div>
+            </div>
+          </div>
+
+      <table>
+        <thead>
+          <tr>
+          <th>
+            Database ID
+          </th>
+          <th>
+             UUID
+          </th>
+          <th>
+            User
+          </th>
+          <th>
+            OS
+          </th>
+          <th>
+            Registration IP
+          </th>
+          <th>
+            Current IP
+          </th>
+          <th>
+            Last Login
+          </th>
+          <th>
+            Created
+          </th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody id="devicelist">
+          <tr id="device-id1">
+            <td>34282364623</td>
+            <td>AAAA-BBBB-CCCC-DDDD-EEEE-FFFFFFF</td>
+            <td>User1</td>
+            <td>Windows (x64)</td>
+            <td>::1</td>
+            <td>::2</td>
+            <td>2019-02-02 3:45 PM</td>
+            <td>2019-01-02 3:45 PM</td>
+            <td><a data-target="manage_device_modal" class="btn waves-effect waves-light orange black-text modal-trigger" onclick="manage_device(this)">Manage</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ul class="pagination" id="device_pages">
+         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+         <li class="active"><a href="#!">1</a></li>
+         <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+
+      </div>
+    </div>
+
+    </div>
+  </div> <!-- end t7 (devices) -->
+
+  <div id="t8" class="col s12">
+    <div class="container">
+      <div class="card-panel">
+        <div class="card-content">
+          <h3>Invite Codes</h3>
+          <div class="row">
+            <div class="col">
+              <div class="chips" id="invitecodes_search">
+              </div>
+            </div>
+          </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <p>
+               <label>
+                 <input type="checkbox" onclick="invites_check_uncheck_all(this)" />
+                 <span></span>
+               </label>
+              </p>
+            </th>
+            <th>Invite Code</th>
+            <th>Current/Max Uses</th>
+            <th>Created</th>
+            <th>Last Use</th>
+            <th>Users</th>
+          </tr>
+        </thead>
+        <tbody id="invitecodes">
+          <tr id="invitecode-id1">
+            <td>
+              <p>
+               <label>
+                 <input type="checkbox" />
+                 <span></span>
+               </label>
+              </p>
+            </td>
+            <td>ADEF-1234-GVU73</td>
+            <td>0/3</td>
+            <td>2019-1-1 3:35 PM</td>
+            <td>N/A</td>
+            <td>
+              N/A
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row right" style="margin-top: 30px">
+        <div class="input-field col" style="position: relative; top: -20px">
+          <select id="invites_go_select">
+            <option value="1">Delete</option>
+          </select>
+          <label>With Selected</label>
+        </div>
+        <div class="col">
+          <button class="btn waves-effect waves-light orange black-text" onclick=invites_execute_go()>Go</button>
+        </div>
+        <div class="col">
+          <button class="btn waves-effect waves-light orange black-text" onmousedown="begin_all_invites_deletion()" onmouseup="end_all_invites_deletion()">Delete All</button>
+        </div>
+        <div class="col">
+          <!--teal darken-4 cyan-text text-accent-2-->
+          <button data-target="create_invite_code" class="btn waves-effect waves-light orange black-text modal-trigger"> Create</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+      <ul class="pagination" id="invitecodes_pages">
+         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+         <li class="active"><a href="#!">1</a></li>
+         <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+    </div>
+      </div>
+
+    </div>
+    </div>
+    </div>
+  </div> <!-- end t8 (invite codes) -->
+
+  <div id="t9" class="col s12">
+    <div class="xcontainer" style="padding: 5px">
+      <div class="card-panel">
+        <div class="card-content">
+          <h3>Sessions</h3>
+          <div class="row">
+            <div class="col">
+              <div class="chips" id="sessions_search">
+              </div>
+            </div>
+          </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <p>
+               <label>
+                 <input type="checkbox" onclick="sessions_check_uncheck_all(this)" />
+                 <span></span>
+               </label>
+              </p>
+            </th>
+            <th>ID</th>
+            <th>IP</th>
+            <th>User ID</th>
+            <th>App ID</th>
+            <th>Device ID</th>
+            <th>License ID</th>
+            <th>Created</th>
+            <th>Last Active</th>
+            <th>Type</th>
+            <th>Server ID</th>
+          </tr>
+        </thead>
+        <tbody id="sessionslist">
+          <tr id="session-id1">
+            <td>
+              <p>
+               <label>
+                 <input type="checkbox" />
+                 <span></span>
+               </label>
+              </p>
+            </td>
+            <td>id1</td>
+            <td>::1</td>
+            <td>USERID1</td>
+            <td>APPID1</td>
+            <td>DEVICEID1</td>
+            <td>LICENSEID1</td>
+            <td>2019-01-02 3:30 PM</td>
+            <td>2019-01-03 3:30 PM</td>
+            <td>Licensed</td>
+            <td>jg429weg</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row right" style="margin-top: 30px">
+        <div class="input-field col" style="position: relative; top: -20px">
+          <select id="sessions_go_select">
+            <option value="1">Kill Session</option>
+          </select>
+          <label>With Selected</label>
+        </div>
+        <div class="col">
+          <button class="btn waves-effect waves-light orange black-text" onclick=sessions_execute_go()>Go</button>
+        </div>
+        <div class="col">
+          <button id="sessionkillallbtn" class="btn waves-effect waves-light orange black-text">Kill All</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+      <ul class="pagination" id="sessions_pages">
+         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+         <li class="active"><a href="#!">1</a></li>
+         <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+    </div>
+        <div class="col" style="max-width: 100px">
+        <input id="sessions_pagenum" type="number" min="1" value="1">
+        <label for="sessions_pagenum">Jump to page</label>
+        </div>
+      </div>
+
+    </div>
+    </div>
+    </div>
+  </div> <!-- end t9 (sessions) -->
+
+  <div id="t10" class="col s12">
+    <div class="xcontainer" style="padding: 5px">
+      <div class="card-panel">
+        <div class="card-content">
+          <h3>Bans (users/devices)</h3>
+          <div class="row">
+            <div class="col">
+              <div class="chips" id="userbans_search">
+              </div>
+            </div>
+          </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <p>
+               <label>
+                 <input type="checkbox" onclick="userbans_check_uncheck_all(this)" />
+                 <span></span>
+               </label>
+              </p>
+            </th>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Registration IP</th>
+            <th>Devices</th>
+            <th>Join Date</th>
+            <th>Last Login</th>
+            <th>Ban Expiration</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="userbanlist">
+          <tr id="userban-id1">
+            <td>
+              <p>
+               <label>
+                 <input type="checkbox" />
+                 <span></span>
+               </label>
+              </p>
+            </td>
+            <td>id1</td>
+            <td>Username</td>
+            <td>::1</td>
+            <td>4</td>
+            <td>2019-01-02 3:30 PM</td>
+            <td>2019-01-03 3:30 PM</td>
+            <td>Never<td/>
+            <td>
+              <a class="btn" onclick=manage_banned_user(this)>Manage</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row right" style="margin-top: 30px">
+        <div class="input-field col" style="position: relative; top: -20px">
+          <select id="userbans_go_select">
+            <option value="1">Unban</option>
+          </select>
+          <label>With Selected</label>
+        </div>
+        <div class="col">
+          <button class="btn waves-effect waves-light orange black-text" onclick=user_bans_execute_go()>Go</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+      <ul class="pagination" id="userbans_pages">
+         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+         <li class="active"><a href="#!">1</a></li>
+         <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+    </div>
+        <div class="col" style="max-width: 100px">
+        <input id="userbans_pagenum" type="number" min="1" value="1">
+        <label for="userbans_pagenum">Jump to page</label>
+        </div>
+      </div>
+
+
+      <!-- device bans -->
+
+      <div class="row">
+        <div class="col">
+          <div class="chips" id="devicebans_search">
+          </div>
+        </div>
+      </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>
+          <p>
+           <label>
+             <input type="checkbox" onclick="devicebans_check_uncheck_all(this)" />
+             <span></span>
+           </label>
+          </p>
+        </th>
+        <th>Device ID</th>
+        <th>Associated User</th>
+        <th>Reg IP</th>
+        <th>Last Login IP</th>
+        <th>Device Type</th>
+        <th>Registration</th>
+        <th>Last Login</th>
+        <th>Ban Expiration</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="devicebanslist">
+      <tr id="deviceban-id1">
+        <td>
+          <p>
+           <label>
+             <input type="checkbox" />
+             <span></span>
+           </label>
+          </p>
+        </td>
+        <td>id1</td>
+        <td>User1</td>
+        <td>::1</td>
+        <td>::1</td>
+        <td>Windows (x64)</td>
+        <td>2019-01-02 3:30 PM</td>
+        <td>2019-01-03 3:30 PM</td>
+        <td>Never</td>
+        <td>
+          <a class="btn" onclick=manage_banned_device(this)>Manage</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row right" style="margin-top: 30px">
+    <div class="input-field col" style="position: relative; top: -20px">
+      <select id="devicebans_go_select">
+        <option value="1">Unban</option>
+      </select>
+      <label>With Selected</label>
+    </div>
+    <div class="col">
+      <button class="btn waves-effect waves-light orange black-text" onclick=devicebans_execute_go()>Go</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+  <ul class="pagination" id="devicebans_pages">
+     <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+     <li class="active"><a href="#!">1</a></li>
+     <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+</div>
+    <div class="col" style="max-width: 100px">
+    <input id="devicebans_pagenum" type="number" min="1" value="1">
+    <label for="devicebans_pagenum">Jump to page</label>
+    </div>
+  </div>
+
+    </div>
+    </div>
+    </div>
+  </div> <!-- end t10 (bans) -->
+
+  <div id="t11" class="col s12">
+    <div class="xcontainer" style="padding: 5px">
+      <div class="card-panel">
+        <div class="card-content">
+          <h3>Server-side variables</h3>
+          <div class="row">
+            <div class="col">
+              <div class="chips" id="ssv_search">
+              </div>
+            </div>
+          </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <p>
+               <label>
+                 <input type="checkbox" onclick="ssv_check_uncheck_all(this)" />
+                 <span></span>
+               </label>
+              </p>
+            </th>
+            <th>DB ID</th>
+            <th>Name</th>
+            <th>Variable Type</th>
+            <th>Value</th>
+            <th>Tied apps</th>
+            <th>Unlicensed Access</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="ssvlist">
+          <tr id="ssv-id1">
+            <td>
+              <p>
+               <label>
+                 <input type="checkbox" />
+                 <span></span>
+               </label>
+              </p>
+            </td>
+            <td>id1</td>
+            <td>Test</td>
+            <td>String</td>
+            <td>BlaBla123</td>
+            <td>(All)</td>
+            <td>No</td>
+            <td><a class="btn" href="#" onclick="manage_ssv(this)">Modify</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row right" style="margin-top: 30px">
+        <div class="input-field col" style="position: relative; top: -20px">
+          <select id="ssv_go_select">
+            <option value="1">Delete</option>
+          </select>
+          <label>With Selected</label>
+        </div>
+        <div class="col">
+          <button class="btn waves-effect waves-light orange black-text" onclick=ssv_execute_go()>Go</button>
+        </div>
+        <div class="col">
+          <a class="btn waves-effect waves-light grey black-text modal-trigger" href="#modal_create_ssv" onclick="setup_ssv_modal()">Create New SSV</a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+      <ul class="pagination" id="ssv_pages">
+         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+         <li class="active"><a href="#!">1</a></li>
+         <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+    </div>
+      </div>
+
+    </div>
+    </div>
+    </div>
+  </div> <!-- end t11 (ssv) -->
+
+  <div id="t12" class="col s12">
+    <div class="xcontainer" style="padding: 5px">
+      <div class="card-panel">
+        <div class="card-content">
+          <h3>Plugins</h3>
+
+          <h4>API Keys</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>ID</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="pluginapikeyslist">
+          <tr id="plugin-apikey-id1">
+            <td>API_KEY_1</td>
+            <td>GH2403WF</td>
+            <td><a href="#" onclick="delete_plugin_apikey(this)" class="btn right red accent-3 black-text">Delete</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>Servers</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>DB ID</th>
+        <th>IP</th>
+        <th>API Key ID</th>
+        <th>Server ID</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="pluginserverlist">
+      <tr id="plugin-server-id1">
+        <td>ID1</td>
+        <td>::1</td>
+        <td>GH2403WF</td>
+        <td><a href="#" onclick="view_plugins_by_server(this)" class="btn black-text">Info</a></td>
+      </tr>
+    </tbody>
+  </table>
+<br>
+
+<a class="btn teal accent-2 right" style="color: rgba(0,0,0,0.87)" href="#" onclick="server_request_plugins_api_key()">Request API key</a>
+<div>
+<div class="row">
+  <div class="input-field col s4">
+    <input id="apikeyimport">
+</div>
+<div class="col">
+<a class="btn teal accent-2" style="color: rgba(0,0,0,0.87); position: relative; top: 20px" href="#" onclick="server_import_api_key()">Import</a>
+</div>
+</div>
+</div>
+
+    </div>
+    </div>
+    </div>
+  </div> <!-- end t12 (plugins) -->
+
+  <div id="t13" class="col s12">
+    <div class="xcontainer" style="padding: 5px">
+      <div class="card-panel">
+        <div class="card-content">
+
+ <ul class="collapsible">
+   <li>
+     <div class="collapsible-header"><i class="material-icons">filter_drama</i>Invoices</div>
+     <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+   </li>
+   <li>
+     <div class="collapsible-header"><i class="material-icons">place</i>Purchase a Plan</div>
+     <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+   </li>
+   <li>
+     <div class="collapsible-header"><i class="material-icons">whatshot</i>My Subscription</div>
+     <div class="collapsible-body">
+
+       <div class="row">
+   <div class="col s12 m6">
+     <div class="card">
+       <div class="card-content black-text">
+         <span class="card-title" id="subscription_title">N/A</span>
+         <div id="subscription_info">
+         <p>You do not have a subscription activated on your account.</p>
+       </div>
+     </div>
+       <div class="card-action">
+         <a href="#">Upgrade</a>
+         <a href="#" class="right">Activate Subscription Code</a>
+       </div>
+     </div>
+   </div>
+ </div>
+
+     </div>
+   </li>
+ </ul>
+
+        </div>
+      </div>
+    </div>
+  </div> <!-- end t13 (subscriptions) -->
+
+</main>
+
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+
+</body>
+</html>

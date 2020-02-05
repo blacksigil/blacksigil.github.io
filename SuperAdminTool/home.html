@@ -1,0 +1,258 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="materialize/css/materialize.min.css">
+<!--<link rel="stylesheet" href="noUiSlider/nouislider.min.css">-->
+<link rel="stylesheet" href="materialize/extras/nouislider.css">
+<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="home.js"></script>
+<!--<script type="text/javascript" src="noUiSlider/nouislider.min.js"></script>-->
+<script type="text/javascript" src="wnumb-1.2.0/wNumb.min.js"></script>
+<script type="text/javascript" src="materialize/extras/nouislider.js"></script>
+
+</head>
+
+<body>
+
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s2"><a href="#tab1">Home</a></li>
+          <li class="tab col s2"><a href="#tab2">Stores</a></li>
+          <li class="tab col s2" onclick="query_plans()"><a href="#tab3">Plans</a></li>
+          <li class="tab col s2" onclick="query_info_subs()"><a href="#tab4">Subscriptions</a></li>
+          <li class="tab col s2"><a href="#tab5">Coupons</a></li>
+          <li class="tab col s2"><a href="#tab5">Invoices</a></li>
+        </ul>
+      </div>
+      <div id="tab1" class="col s12">
+        <h3>Home</h3>
+        <p>Create Annoucement</p>
+      </div>
+      <div id="tab2" class="col s12">
+
+      </div>
+
+      <div id="modal1" class="modal">
+   <div class="modal-content">
+     <h4>Create/Modify Plan</h4>
+     <div class="row">
+     <div class="input-field col s6">
+         <input placeholder="Plan name" id="plan_name" type="text" class="validate" required minlength="3">
+         <label for="plan_name">Name</label>
+    </div>
+  </div>
+
+    <table>
+      <thead>
+        <tr>
+          <td>Price</td>
+          <td>Duration</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody id="pricingoptions1">
+      </tbody>
+    </table>
+    <div class="row">
+    <div class="input-field col s2">
+        <input placeholder="Price" id="price1" type="text" class="validate">
+        <label for="price1">Price</label>
+    </div>
+    <div class="col s6">
+      <p>Duration (days)</p>
+       <p class="range-field">
+        <input type="range" id="plan_duration_slider" min="0" max="1825" value="365" />
+      </p>
+    </div>
+    </div>
+    <a class="btn" href="#" onclick=add_pricing_option()>Add</a>
+
+    <h3>Attributes</h3>
+    <p>Max Users</p>
+    <p class="range-field">
+     <input type="range" id="max_users_slider" min="0" max="10000" value="10" />
+   </p>
+   <p>Max Sessions</p>
+   <p class="range-field">
+    <input type="range" id="max_sessions_slider" min="0" max="10000" value="10" />
+  </p>
+  <p>Max Licenses</p>
+  <p class="range-field">
+   <input type="range" id="max_licenses_slider" min="0" max="10000" value="10" />
+ </p>
+  <p>Max Apps</p>
+  <p class="range-field">
+   <input type="range" id="max_apps_slider" min="0" max="100" value="1" />
+ </p>
+ <a href="#" class="modal-close btn black-text blue waves-effect waves-cyan" onclick="create_plan()" id="createplanbtn">Create</a>
+ <a href="#" class="modal-close btn black-text blue waves-effect waves-cyan" onclick="modify_plan()" id="modifyplanbtn" style="display:none">Modify</a>
+ <a href="#" class="modal-close btn black-text red waves-effect waves-cyan" onclick="delete_plan()" id="deleteplanbtn" style="display:none">Delete</a>
+
+   </div>
+   <div class="modal-footer">
+     <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+   </div>
+ </div>
+
+ <div id="create-subscription-code-modal" class="modal">
+<div class="modal-content">
+  <p>Duration (days)</p>
+  <p class="range-field">
+   <input type="range" id="subscription_duration-slider" min="0" max="365" value="1" />
+ </p>
+
+ <p>Number of copies</p>
+ <p class="range-field">
+  <input type="range" id="subscription_copies-slider" min="0" max="100" value="1" />
+</p>
+
+ <div class="row">
+ <div class="input-field col s3">
+     <input placeholder="planid" id="subplanid" type="text" class="validate">
+     <label for="subplanid">Plan ID</label>
+ </div>
+</div>
+
+<a href="#" class="btn blue blue-text text-darken-4 modal-close" onclick=create_subscription_code()>Create Subscription Code</a>
+
+</div>
+<div class="modal-footer">
+  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+</div>
+</div>
+
+<div id="modal_subcodes_generated" class="modal">
+<div class="modal-content">
+  <div class="row">
+  <div class="input-field col s12">
+    <textarea id="subcodes" class="materialize-textarea"></textarea>
+    <label for="subcodes">Subscription codes</label>
+  </div>
+</div>
+
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+  </div>
+
+
+      <div id="tab3" class="col s12">
+        <table class="table striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Plan name</th>
+              <th>Attributes</th>
+              <th>Pricing</th>
+              <th>Active Subscriptions</th>
+              <th>Total Subscriptions</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="plans">
+            <tr id="plan-id-1">
+              <td>ID-1</td>
+              <td>Plan1</td>
+              <td>
+                <div class="chip">max_users=20</div>
+                <div class="chip">max_sessions=10</div>
+                <div class="chip">max_licenses=10</div>
+                <div class="chip">max_apps=1</div>
+              </td>
+              <td>
+                <div class="chip"><b>$30</b> 1 mo</div>
+                <div class="chip"><b>$75</b> 3 mo</div>
+                <div class="chip"><b>$150</b> 6 mo</div>
+                <div class="chip"><b>$300</b> 12 mo</div>
+
+              </td>
+              <td>258</td>
+              <td>498</td>
+              <td><a href="#" onclick="show_modify_plan_modal(this)" class="btn waves-effect waves-light green black-text">Modify</a>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <a href="#modal1" class="btn black-text waves-effect waves-light modal-trigger" style="position: absolute; right: 60px" onclick="setup_create_plan_modal()">Create Plan</a>
+
+      </div>
+
+      <div id="tab4" class="col s12">
+        <h3>Subscriptions</h3>
+        <div class="row">
+          <div class="col s2">
+        <div class="chips" id="subscriptions_search">
+          <input placeholder="search">
+        </div>
+        </div>
+      </div>
+
+        <table>
+          <thead>
+            <tr>
+            <th>ID</th>
+            <th>Store name</th>
+            <th>Expiration</th>
+            <th>Plan ID</th>
+          </tr>
+          </thead>
+          <tbody id="subscriptions">
+          </tbody>
+        </table>
+
+        <ul class="pagination" id="subscriptions_pages">
+           <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+           <li class="active"><a href="#!">1</a></li>
+           <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+
+        <h3>Subscription Codes</h3>
+        <div class="row">
+          <div class="col s2">
+        <div class="chips" id="subscriptioncodes_search">
+          <input placeholder="search">
+        </div>
+        </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Plan ID</th>
+            <th>Duration</th>
+            <th>Subscription ID (if activated)</th>
+          </tr>
+          </thead>
+          <tbody id="subscriptioncodes">
+          </tbody>
+        </table>
+
+        <ul class="pagination" id="subscriptioncodes_pages">
+           <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+           <li class="active"><a href="#!">1</a></li>
+           <li class="waves-effect disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+
+        <a class="btn black-text right modal-trigger" href="#create-subscription-code-modal">Create Subscription Code</a>
+
+      </div>
+
+      <div id="tab5" class="col s12">
+
+      </div>
+
+      <div id="tab6" class="col s12">
+
+      </div>
+
+    </div>
+
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+
+</html>

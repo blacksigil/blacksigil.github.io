@@ -1,0 +1,54 @@
+
+
+.animate.fadeLeft {
+    -webkit-animation: fadeLeft;
+    -moz-animation: fadeLeft;
+    -o-animation: fadeLeft;
+    animation: fadeLeft;
+    -webkit-animation-duration: 1.5s;
+    -moz-animation-duration: 1.5s;
+    -o-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    -o-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+.gradient-45deg-light-blue-cyan.gradient-shadow {
+    -webkit-box-shadow: 0 6px 20px 0 rgba(38, 198, 218, .5) !important;
+    box-shadow: 0 6px 20px 0 rgba(38, 198, 218, .5) !important;
+}
+.cardx {
+    overflow: hidden;
+    margin: 1rem 0 1rem 0;
+}
+.gradient-45deg-light-blue-cyan {
+    background: #0288d1;
+    background: -webkit-linear-gradient(45deg, #0288d1, #26c6da) !important;
+    background: -moz- oldlinear-gradient(45deg, #0288d1, #26c6da) !important;
+    background: -o-linear-gradient(45deg, #0288d1, #26c6da) !important;
+    background: linear-gradient(45deg, #0288d1, #26c6da) !important;
+}
+
+.background-round {
+    padding: 15px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, .18);
+}
+
+
+    <div class="container">
+      <div class="card cardx gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text animate fadeLeft">
+            <div class="padding-4">
+               <div class="col s7 m7">
+                  <i class="material-icons background-round mt-5">add_shopping_cart</i>
+                  <p>Orders</p>
+               </div>
+               <div class="col s5 m5 right-align">
+                  <h5 class="mb-0 white-text">690</h5>
+                  <p class="no-margin">New</p>
+                  <p>6,000,00</p>
+               </div>
+            </div>
+         </div>
+    </div>

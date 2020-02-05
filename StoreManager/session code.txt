@@ -1,0 +1,28 @@
+<div class="col">
+  <div class="card black-text hoverable" id="session1">
+    <div class="card-content cyan lighten-4">
+      <div class="card-title">
+        <span class="title">DESKTOP-1239RFC77X</span>
+        <div class="right"><span class="dropdown-trigger" data-target='dropdown1' onclick="whom=get_session_id(this)"><i class="material-icons">more_vert</i></span></div>
+        <span class="right">&nbsp;<!--create spacing between dropdown trigger--></span>
+        <span class="badge green lighten-3 black-text">Online</span>
+        <span class="badge red lighten-3 black-text">Admin</span>
+      </div>
+    </div>
+    <div class="card-content">
+      <span class="rmargin5 tulk grey lighten-3">IP</span><span class="tulk grey lighten-5">127.0.0.1</span>
+      <span class="rmargin5 tulk grey lighten-3">Last active</span><span class="tulk grey lighten-5">30s ago</span>
+      <br>
+      <span class="tulk grey lighten-3">Created</span><span class="tulk grey lighten-5">11/18/2019 3:14 PM</span>
+      <br>
+      <div class="infoblock">
+          <div><div class="tulk yellow accent-3">Attributes</div></div>
+          <span class="tulk yellow accent-1">Current</span>
+          <span class="tulk green accent-2">Live</span>
+          <!--<span class="tulk red accent-2">Offline</span> -->
+      </div>
+
+
+    </div>
+</div>
+</div> <!--end session 1-->
