@@ -1,0 +1,41 @@
+<html>
+<body onload=init()>
+<script>
+var prevX, prevY;
+var currX, currY;
+var w, h;
+var ctx, canvas;
+var inited=false;
+ function draw() {
+		if (!inited) return;
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 4;
+        ctx.stroke();
+        ctx.closePath();
+    }
+	
+	function init()
+	{
+	        canvas = document.getElementById('canvas1');
+        ctx = canvas.getContext("2d");
+    w = canvas.width;
+        h = canvas.height;
+    
+	 canvas.addEventListener("mousemove", function (e) {
+            prevX = currX;
+            prevY = currY;
+			currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+			draw();
+			inited = true;
+        }, false);
+	}
+</script>
+
+<canvas id="canvas1" width="3000" height="3000" style="position:absolute;top:0;left:0;border:2px solid"></canvas>
+
+</body>
+</html>
