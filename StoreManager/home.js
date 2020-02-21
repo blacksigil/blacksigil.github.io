@@ -30,6 +30,9 @@ var hwid_options = {
     uuid:true,
     only_os_drive:false
   },
+  nic:{
+    permanent_mac:true
+  },
   etc:{
     arp_table:true,
     boot_uuid:true,
@@ -3545,4 +3548,39 @@ function user_view_devices()
     tag: tag1,
     image: ''
   });
+}
+////////////////////////////////////////////////////////////////////////////////////////
+//subscriptions
+//server_activate_subscription (code, force activation(will erase previous subscription))
+
+function query_subscriptions()
+{
+  server_query_subscription();
+}
+
+function subscription_activation_requires_force()
+{
+  
+}
+
+function on_subscription(json_str)
+{
+  var j = JSON.parse(json_str);
+  if (j === null){
+
+    return;
+  }
+  $("#subscription_title").text(j.plan_name);
+  var html = '';
+  html = '<p>Expires on <b>' + new Date(j.expiration).toLocaleString() + '</b></p>';
+  for (const attrib in j.plan_attributes){
+    html += '<div class="chip">' + attrib + "=" + j.plan_attributes[attrib] + '</div>';
+    }
+
+  $("#subscription_info").html(html);
+}
+
+function activate_subscription_code()
+{
+  server_activate_subscription($("#subcode").val(), false);
 }

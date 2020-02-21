@@ -266,7 +266,7 @@
           <div class="col">
             <div class="input-field">
                 <select id="setting_reg_max_registrations_per_device" onchange="save_store_settings()" >
-                  <option value="" disabled>Choose your option</option>
+                  <option value="4" disabled>Choose your option</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -1829,6 +1829,17 @@
     </div>
   </div> <!-- end t12 (plugins) -->
 
+  <div id="modal_activate_subscription_code" class="modal">
+  <div class="modal-content">
+    <input type="text" id="subcode" placeholder="code">
+    <a class="btn" href="#" onclick=activate_subscription_code()>Activate</a>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div> <!-- end modal3 -->
+
+
   <div id="t13" class="col s12">
     <div class="xcontainer" style="padding: 5px">
       <div class="card-panel">
@@ -1858,7 +1869,7 @@
      </div>
        <div class="card-action">
          <a href="#">Upgrade</a>
-         <a href="#" class="right">Activate Subscription Code</a>
+         <a href="#modal_activate_subscription_code" class="right modal-trigger">Activate Subscription Code</a>
        </div>
      </div>
    </div>
